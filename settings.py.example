@@ -1,0 +1,14 @@
+# Copy this file to "settings.py"
+
+ACCESS_TOKEN = ''
+API_BASE = 'https://mastodon.social'
+
+# Cache file, None to disable
+CACHE_FILE = './last_toot_cache.pickle'
+
+# Instances that are confirmed down forever
+ASSUME_DEAD_INSTANCES = {'dead.example.com'}
+
+# Instances that should be skipped
+# (ie where most accounts would often appear empty)
+SKIP_INSTANCES = {'ephemeral.glitch.social'}

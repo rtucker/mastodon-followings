@@ -12,6 +12,9 @@ Requirements:
     pipenv install
     cp settings.py.example settings.py
     # then edit settings.py to have the correct stuff
+
+Then run it:
+    pipenv run python followings.py --help
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter

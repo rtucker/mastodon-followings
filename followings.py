@@ -9,22 +9,9 @@ actions, and a second time that will skip all verified active profiles.
 With colors and a nice progress bar with item count, %, and ETA.
 
 Requirements:
-    pip3 install Mastodon.py colorama tqdm python-dateutil --user
-
-It requires a settings.py file:
-    ACCESS_TOKEN = ''
-    API_BASE = 'https://mastodon.social'
-
-    # Cache file, None to disable
-    CACHE_FILE = './last_toot_cache.pickle'
-
-    # Instances that are confirmed down forever
-    ASSUME_DEAD_INSTANCES = {'dead.example.com'}
-
-    # Instances that should be skipped
-    # (ie where most accounts would often appear empty)
-    SKIP_INSTANCES = {'ephemeral.glitch.social'}
-
+    pipenv install
+    cp settings.py.example settings.py
+    # then edit settings.py to have the correct stuff
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter

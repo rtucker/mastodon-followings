@@ -1,1 +1,42 @@
-Original from: https://gist.github.com/CosineP/d7ecf4a193dda8ea47765ac697bba410
+INSTALLATION
+============
+
+Go to Settings -> Development, create a new application:
+    Application name:       mastodon-followings
+    Application website:    https://github.com/rtucker/mastodon-followings
+    Minimum required scopes:
+        read:accounts read:follows read:statuses
+        write:blocks write:follows
+
+Install the dependencies for this script:
+    pipenv install
+    cp settings.py.example settings.py
+    # then edit settings.py to have the correct stuff
+
+Then run it:
+    pipenv run python followings.py --help
+
+EXAMPLE USAGES
+==============
+
+Note: omitting the "--unfollow" in the below examples will do a "dry run,"
+      allowing you to make sure everything is going to be alright.
+
+Unfollow accounts which have not tooted in six months:
+    pipenv run python followings.py --min-activity=6m [--unfollow]
+
+Remove followers who haven't tooted in a year:
+    pipenv run python followings.py --followers [--unfollow]
+
+Remove followers who you aren't following:
+    pipenv run python followings.py --unmutuals [--unfollow]
+
+CREDITS
+=======
+
+Original from:
+https://gist.github.com/CosineP/d7ecf4a193dda8ea47765ac697bba410
+
+which was itself a fork of:
+https://gist.github.com/0xa/b4e289102c6e87b58ad9f72c2aa93400
+

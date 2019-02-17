@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
 """
-
 A script that go through your followings and unfollows dead accounts.
 It notices empty accounts, accounts that were deleted locally and remotely,
 and also cleans up dead instances if allowed to.
+
+It can also do the same for your followers (accounts following you), with
+the --followers option.
+
+The --unmutuals option will select accounts which follow you, but which
+you do not follow.
+
 It has a cache so you can run it once without --unfollow to preview its
 actions, and a second time that will skip all verified active profiles.
 With colors and a nice progress bar with item count, %, and ETA.
 
-Requirements:
-    pipenv install
-    cp settings.py.example settings.py
-    # then edit settings.py to have the correct stuff
-
-Then run it:
-    pipenv run python followings.py --help
-
-Required API scopes:
-    read:accounts read:follows read:statuses write:blocks write:follows
+Please see the README file for installation/configuration help.
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter

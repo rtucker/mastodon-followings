@@ -8,6 +8,7 @@ name = "pypi"
 colorama = "*"
 tqdm = "*"
 python-dateutil = "*"
+requests = ">=2.20.0"
 
 [dev-packages]
 

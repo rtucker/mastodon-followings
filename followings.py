@@ -59,7 +59,7 @@ class UserGone(Exception):
 
 
 
-def get_last_toot(mastodon, fid):
+def get_last_toot(mastodon, fid, force=False):
 
     if settings.CACHE_FILE:
         try:
@@ -71,7 +71,7 @@ def get_last_toot(mastodon, fid):
     else:
         cache = {}
 
-    if fid in cache:
+    if fid in cache and not force:
         return cache[fid]
 
     statuses = mastodon.account_statuses(fid)
@@ -212,8 +212,11 @@ def main():
 
             elif args.min_activity and inst not in settings.SKIP_INSTANCES:
                 try:
-                    print(f.get('url'))
                     last_toot = get_last_toot(mastodon, fid)
+                    if last_toot < now - args.min_activity:
+                        # force a cache miss to be Sure
+                        last_toot = get_last_toot(mastodon, fid, force=True)
+
                     if last_toot < now - args.min_activity:
                         act = True
                         msg = "(!)"

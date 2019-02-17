@@ -15,6 +15,9 @@ Requirements:
 
 Then run it:
     pipenv run python followings.py --help
+
+Required API scopes:
+    read:accounts read:statuses write:blocks write:follows
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
@@ -101,7 +104,8 @@ def main():
     parser.add_argument('--min-activity', dest='min_activity',
                         type=parse_time_ago, default="1y",
                         help=("Remove followings inactive for a given period"
-                              " (m for months, y for years, d for days)"))
+                              " (m for months, y for years, d for days) "
+                              "(default: %(default)s)"))
     parser.add_argument('--target-count', dest='target_count', type=int,
                         help=("Target some following count (will try to stop"
                               " when you have that many followings left)"))

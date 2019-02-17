@@ -17,7 +17,7 @@ Then run it:
     pipenv run python followings.py --help
 
 Required API scopes:
-    read:accounts read:statuses write:blocks write:follows
+    read:accounts read:follows read:statuses write:blocks write:follows
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
@@ -114,6 +114,9 @@ def main():
     parser.add_argument('--followers', action='store_true',
                         help="Instead of removing people you follow, remove "
                         "people who follow YOU")
+    parser.add_argument('--unmutuals', action='store_true',
+                        help="Remove people who follow you but that you "
+                        "don't follow")
     parser.add_argument('-v', '--verbose', action='store_true',
                         help="Display more things")
 
@@ -129,6 +132,9 @@ def main():
 
     current_user = mastodon.account_verify_credentials()
     uid = current_user['id']
+
+    if args.unmutuals:
+        args.followers = True
 
     if args.followers:
         followings_count = current_user['followers_count']
@@ -195,7 +201,19 @@ def main():
 
             act = False
 
-            if args.min_activity and inst not in settings.SKIP_INSTANCES:
+            if args.unmutuals and inst not in settings.SKIP_INSTANCES:
+                try:
+                    relations = mastodon.account_relationships(fid)
+                    is_mutual = relations[0]["following"] or relations[0]["requested"]
+
+                    if not is_mutual:
+                        clog(Fore.YELLOW, "- Unmutual ({})".format(relations))
+                        act = True
+                except (UserGone, Error, requests.RequestException) as e:
+                    act = False
+                    clog(Fore.YELLOW, "- Exception ({})".format(e))
+
+            elif args.min_activity and inst not in settings.SKIP_INSTANCES:
                 try:
                     print(f.get('url'))
                     last_toot = get_last_toot(mastodon, fid)
